@@ -12,7 +12,11 @@ class ConnectPacket extends Packet {
         console.log("Connected")
         player.base64 = this.data.base64;
         player.name = player.id;
-        player.name = this.data.name;
+        console.log("Name:" + this.data.name);
+        if (this.data.name != undefined)
+            player.name = this.data.name;
+        else
+            player.name = player.id;
         player.x = Math.random() * (global.world.size[0]-100) + 50;
         player.y = Math.random() * (global.world.size[1]-100) + 50;
         player.angle = Math.random() * 2 * Math.PI;

@@ -39,7 +39,7 @@ export class GameScene extends Phaser.Scene {
 
   init(data): void {
     this.playerBase64 = data.base64;
-    if (data.name) this.playerName = data.name;
+    if (data.name != '') this.playerName = data.name;
     this.matter.world.setBounds(0,0,5000,5000);
     this.matter.world.autoUpdate = false;
     this.bg = this.add.image(0,0,"bg").setOrigin(0);
@@ -99,7 +99,7 @@ export class GameScene extends Phaser.Scene {
   {
     //console.log("connected to server"); 
     console.dir(this.textures.list);
-    if (this.playerName != "")
+    if (this.playerName != '')
     this.socket.emit('new_player', {base64: this.playerBase64, name: this.playerName});
     else
     this.socket.emit('new_player', {base64: this.playerBase64});

@@ -119,48 +119,71 @@ export class Ship extends Phaser.Physics.Matter.Image {
 
     if (this.cursors.left.isDown || this.aKey.isDown)
     {
-      //this.setAngularVelocity(-0.075);
       this.inputsOn = true;
       this.sideways = -1;
     }
     else if (this.cursors.right.isDown || this.dKey.isDown)
     {
-      //this.setAngularVelocity(0.075);
       this.inputsOn = true;
       this.sideways = 1;
     }
     else
     {
-      //this.setAngularVelocity(0);
       this.sideways = 0;
     }
 
     if (this.currentScene.input.pointer1.isDown)
     {
       this.inputsOn = true;
-      var angleBetween = Math.atan2((this.currentScene.input.pointer1.worldY-this.y),(this.currentScene.input.pointer1.worldX-this.x));
-      if (angleBetween >= 270 || angleBetween <= 90)
+      var angleToPointer = Phaser.Math.Angle.Between(640, 360, this.currentScene.input.pointer1.x, this.currentScene.input.pointer1.y) + 1.5708;
+      
+      console.log(angleToPointer);
+      //angleBetween = Math.abs(angleBetween);
+      var angleDelta = angleToPointer - this.rotation;
+  
+      angleDelta = Math.atan2(Math.sin(angleDelta), Math.cos(angleDelta));
+      
+      if (Phaser.Math.Within(angleDelta, 0, 0.1))
       {
-        this.sideways = 1;
+        this.sideways = 0;
       }
       else
       {
-        this.sideways = -1;
+        this.sideways = Math.sign(angleDelta) * 1;
       }
 
-      this.forward = Phaser.Math.Distance.Between(this.currentScene.input.pointer1.x,this.currentScene.input.pointer1.y,this.x,this.y); //(this.currentScene.input.pointer1.y < this.currentScene.game.canvas.height/2) ? 1 : -1;
+      this.forward = 1;
+    }
+
+    if (this.currentScene.input.mousePointer.isDown)
+    {
+      this.inputsOn = true;
+      var angleToPointer = Phaser.Math.Angle.Between(640, 360, this.currentScene.input.mousePointer.x, this.currentScene.input.mousePointer.y) + 1.5708;
+      
+      console.log(angleToPointer);
+      //angleBetween = Math.abs(angleBetween);
+      var angleDelta = angleToPointer - this.rotation;
+  
+      angleDelta = Math.atan2(Math.sin(angleDelta), Math.cos(angleDelta));
+      
+      if (Phaser.Math.Within(angleDelta, 0, 0.05))
+      {
+        this.sideways = 0;
+      }
+      else
+      {
+        this.sideways = Math.sign(angleDelta) * 1;
+      }
+
+      this.forward = 1;
     }
 
     if ((this.shootKey.isDown || this.currentScene.input.pointer2.isDown) && !this.shooting) {
-      //this.shoot();
-      //this.recoil();
       this.inputsOn = true;
       this.shooting = 1;
     }
     
     if ((this.dashKey.isDown || this.currentScene.input.pointer3.isDown) && !this.dashing) {
-      //this.shoot();
-      //this.recoil();
       this.inputsOn = true;
       this.dashing = 1;
     }
