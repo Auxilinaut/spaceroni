@@ -50,7 +50,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.socket = Socket('127.0.0.1:4200');
+    this.socket = Socket('142.44.160.26:4200');
     this.socket.on("connect", this.onSocketConnected.bind(this));
     this.socket.on("new_player", this.onNewPlayer.bind(this));
     this.socket.on("existing_players", this.onExistingPlayers.bind(this));

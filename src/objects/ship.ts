@@ -55,8 +55,9 @@ export class Ship extends Phaser.Physics.Matter.Image {
     this.velocity = new Phaser.Math.Vector2(0, 0);
 
     // input
+    this.currentScene.input.mouse.disableContextMenu();
     this.cursors = this.currentScene.input.keyboard.createCursorKeys();
-    this.currentScene.input.addPointer(2);
+    this.currentScene.input.addPointer(3);
     this.wKey = this.currentScene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.W
     );
@@ -132,12 +133,36 @@ export class Ship extends Phaser.Physics.Matter.Image {
       this.sideways = 0;
     }
 
+    if (this.shootKey.isUp) {
+      this.shooting = 0;
+    }
+
+    if (this.dashKey.isUp) {
+      this.dashing = 0;
+    }
+
+    if (this.currentScene.input.activePointer.justUp)
+    {
+      this.inputsOn = true;
+      this.shooting = 0;
+      this.dashing = 0;
+    }
+
+    if ((this.currentScene.input.activePointer.isDown) && !this.shooting)
+    {
+      if (this.currentScene.input.activePointer.justDown) this.inputsOn = true;
+
+      if (this.shootKey.isDown || this.currentScene.input.activePointer.leftButtonDown()) this.shooting = 1;
+
+      if (this.dashKey.isDown || this.currentScene.input.activePointer.rightButtonDown()) this.dashing = 1;
+    }
+    
     if (this.currentScene.input.pointer1.isDown)
     {
       this.inputsOn = true;
       var angleToPointer = Phaser.Math.Angle.Between(640, 360, this.currentScene.input.pointer1.x, this.currentScene.input.pointer1.y) + 1.5708;
       
-      console.log(angleToPointer);
+      //console.log(angleToPointer);
       //angleBetween = Math.abs(angleBetween);
       var angleDelta = angleToPointer - this.rotation;
   
@@ -153,14 +178,16 @@ export class Ship extends Phaser.Physics.Matter.Image {
       }
 
       this.forward = 1;
+      
+      return;
     }
 
-    if (this.currentScene.input.mousePointer.isDown)
+    if (this.currentScene.input.mousePointer.active)
     {
       this.inputsOn = true;
       var angleToPointer = Phaser.Math.Angle.Between(640, 360, this.currentScene.input.mousePointer.x, this.currentScene.input.mousePointer.y) + 1.5708;
       
-      console.log(angleToPointer);
+      //console.log(angleToPointer);
       //angleBetween = Math.abs(angleBetween);
       var angleDelta = angleToPointer - this.rotation;
   
@@ -176,84 +203,6 @@ export class Ship extends Phaser.Physics.Matter.Image {
       }
 
       this.forward = 1;
-    }
-
-    if ((this.shootKey.isDown || this.currentScene.input.pointer2.isDown) && !this.shooting) {
-      this.inputsOn = true;
-      this.shooting = 1;
-    }
-    
-    if ((this.dashKey.isDown || this.currentScene.input.pointer3.isDown) && !this.dashing) {
-      this.inputsOn = true;
-      this.dashing = 1;
-    }
-
-    if (this.shootKey.isUp) {
-      this.shooting = 0;
-    }
-
-    if (this.dashKey.isUp) {
-      this.dashing = 0;
-    }
-  }
-
-  /*private applyForces(): void {
-    // apple velocity to position
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
-
-    // reduce the velocity
-    this.velocity.scale(0.98);
-  }*/
-
-  /*private checkIfOffScreen(): void {
-    // horizontal check
-    if (this.x > this.currentScene.sys.canvas.width + CONST.SHIP_SIZE) {
-      this.x = -CONST.SHIP_SIZE;
-    } else if (this.x < -CONST.SHIP_SIZE) {
-      this.x = this.currentScene.sys.canvas.width + CONST.SHIP_SIZE;
-    }
-
-    // vertical check
-    if (this.y > this.currentScene.sys.canvas.height + CONST.SHIP_SIZE) {
-      this.y = -CONST.SHIP_SIZE;
-    } else if (this.y < -CONST.SHIP_SIZE) {
-      this.y = this.currentScene.sys.canvas.height + CONST.SHIP_SIZE;
-    }
-  }*/
-
-  private shoot(): void {
-    this.bullets.push(
-      new Bullet(this.currentScene, 
-        this.x + CONST.SHIP_SIZE * Math.cos(this.rotation - Math.PI / 2),
-        this.y + CONST.SHIP_SIZE * Math.sin(this.rotation - Math.PI / 2),
-        'laser',
-        {rotation:this.rotation}
-      )
-    );
-  }
-
-  private recoil(): void {
-    // create the force in the correct direction
-    /*let force = new Phaser.Math.Vector2(
-      -Math.cos(this.rotation - Math.PI / 2),
-      -Math.sin(this.rotation - Math.PI / 2)
-    );
-
-    // reduce the force and apply it to the velocity
-    force.scale(0.05);
-    this.velocity.add(force);*/
-    this.thrustRight(CONST.BULLET_SPEED/2);
-  }
-
-  private updateBullets(): void {
-    for (let i = 0; i < this.bullets.length; i++) {
-      if (this.bullets[i].active) {
-        this.bullets[i].update();
-      } else {
-        this.bullets[i].destroy();
-        this.bullets.splice(i, 1);
-      }
     }
   }
 }

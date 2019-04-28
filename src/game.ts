@@ -22,6 +22,7 @@ const config: GameConfig = {
   parent: "game",
   scene: [BootScene, MainMenuScene, GameScene, UIScene],
   input: {
+    activePointers: 2,
     keyboard: true,
     mouse: true,
     touch: true,
