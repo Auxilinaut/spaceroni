@@ -238,38 +238,42 @@ class World {
 
     onPlayerInput(id, move, rotate, shoot, dash) {
         let player = this.players[id];
-        let ship = player.body;
+        if (player)
+        {
+            let ship = player.body;
 
-        if (move) {
-            //player.isMoving = true;
-            Matter.Body.applyForce(ship, ship.position, {
-                x: +move * Math.sin(ship.angle) / 500,
-                y: -move * Math.cos(ship.angle) / 500
-            });
-        }
+            if (move) {
+                //player.isMoving = true;
+                Matter.Body.applyForce(ship, ship.position, {
+                    x: +move * Math.sin(ship.angle) / 500,
+                    y: -move * Math.cos(ship.angle) / 500
+                });
+            }
 
-        if (rotate != 0)
-         Matter.Body.setAngularVelocity(ship, Math.PI / 60 * rotate);
-        
-        if (shoot && player.shootTimer === 0)
-            player.isShooting = true;
+            if (rotate != 0) Matter.Body.setAngularVelocity(ship, Math.PI / 60 * rotate);
+            
+            if (shoot && player.shootTimer === 0) player.isShooting = true;
 
-        if (dash && player.dashTimer === 0) {
-            player.dashTimer = 30;
-            Matter.Body.applyForce(ship, ship.position, {
-                x: Math.sin(ship.angle) / 10,
-                y: -Math.cos(ship.angle) / 10
-            })
+            if (dash && player.dashTimer === 0)
+            {
+                player.dashTimer = 30;
+                Matter.Body.applyForce(ship, ship.position,
+                    {
+                        x: Math.sin(ship.angle) / 10,
+                        y: -Math.cos(ship.angle) / 10
+                    }
+                );
+            }
         }
     }
 
     updateScore(ownerId) {
         let player = this.players[ownerId];
-        if (player) {
+        if (player)
+        {
             player.score += 10;
+            console.log(ownerId + " received 10 points!\nPlayer's score is now " + player.score);
         }
-        console.log(ownerId + " received 10 points!\nPlayer's score is now " + player.score);
-        //emit to that guy his new score
     }
 
     updateLeaderboard(players)

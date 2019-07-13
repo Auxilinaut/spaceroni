@@ -29,6 +29,7 @@ export class MainMenuScene extends Phaser.Scene {
   }
 
   init(): void {
+    this.cameras.main.setViewport(0,0,window.innerWidth,window.innerHeight)
     this.startKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.ENTER
     );
@@ -219,7 +220,7 @@ export class MainMenuScene extends Phaser.Scene {
   generateMusic() : void {
       var stress: number = 0;
       var energy: number = 0.25;
-      var pat: number = 3;
+      var pat: number = 4;
       var patLen: number = 512;
       var plusOrMinus: number = Math.random() < 0.5 ? -1 : 1;
       var seed: number = plusOrMinus * Math.random() * Number.MAX_VALUE;

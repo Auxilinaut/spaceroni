@@ -50,7 +50,9 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.socket = Socket('142.44.160.26:4200');
+    var dev = "localhost";
+    var prod = "142.44.160.26";
+    this.socket = Socket(dev + ':4200');
     this.socket.on("connect", this.onSocketConnected.bind(this));
     this.socket.on("new_player", this.onNewPlayer.bind(this));
     this.socket.on("existing_players", this.onExistingPlayers.bind(this));
@@ -237,8 +239,7 @@ export class GameScene extends Phaser.Scene {
 
     if (data.victimId == this.player.id)
     {
-      location.reload(true);
-      /*deadGuy = this.player;
+      deadGuy = this.player;
       this.inGame = false;
       //this.matter.world.remove(deadGuy, true);
       //deadGuy.destroy();
@@ -250,7 +251,7 @@ export class GameScene extends Phaser.Scene {
       console.log("Texture list:");
       console.dir(this.textures.list);
 
-      for (var i=0; i<this.enemies.length; i++)
+      for (var i=0; i < this.enemies.length; i++)
       {
         console.log("Removing enemy texture with ID " + this.enemies[i].id);
         this.textures.remove(this.enemies[i].id);
@@ -261,7 +262,8 @@ export class GameScene extends Phaser.Scene {
       this.enemies = [];
       this.bullets = {};
 
-      this.scene.start('BootScene');*/
+      
+      this.scene.start('BootScene');
     }
     else
     {

@@ -38,7 +38,8 @@ const config: GameConfig = {
   },
   backgroundColor: "#000000",
   pixelArt: true,
-  antialias: true
+  antialias: true,
+  "render.autoResize": true
 };
 
 export class Game extends Phaser.Game {
@@ -50,7 +51,9 @@ export class Game extends Phaser.Game {
     var canvas = document.querySelector("canvas");
     var windowWidth = window.innerWidth;
     var windowHeight = window.innerHeight;
-    var windowRatio = windowWidth / windowHeight;
+    canvas.style.width = windowWidth + "px";
+    canvas.style.height = windowHeight + "px";
+    /*var windowRatio = windowWidth / windowHeight;
     var gameRatio = +this.config.width / +this.config.height;
   
     if(windowRatio < gameRatio){
@@ -60,12 +63,14 @@ export class Game extends Phaser.Game {
     else {
         canvas.style.width = (windowHeight * gameRatio) + "px";
         canvas.style.height = windowHeight + "px";
-    }
+    }*/
+
+    this.renderer.resize(windowWidth, windowHeight);
   }
 }
 
 window.onload = () => {
   var game = new Game(config);
-  game.resize();
-  window.addEventListener("resie", game.resize, false);
+  //game.resize();
+  //window.addEventListener("resie", game.resize, false);
 };
