@@ -1,7 +1,7 @@
 <p align="center">
   <h1>Spaceroni "3"</h1>
-  <h2>NJIT Capstone Project</h2>
-  <p>A multiplayer top-down 2D arcade space shooter</p>
+  <h2>NJIT Capstone Fall 2018 Project</h2>
+  <p>A multiplayer top-down 2D arcade space shooter<br/>Credits go to the rest of the e-team: Tim Nieto, Roy Keren, and Rocco Galante</p>
 </p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
