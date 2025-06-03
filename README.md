@@ -1,5 +1,7 @@
 <p align="center">
-  <h1>Spaceroni 3</h1>
+  <h1>Spaceroni "3"</h1>
+  <h2>NJIT Capstone Project</h2>
+  <p>A multiplayer top-down 2D arcade space shooter</p>
 </p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
